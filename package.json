@@ -1,7 +1,7 @@
 {
   "name": "@punctual/engine",
   "version": "0.3.0",
-  "description": "Edge-native scheduling engine \u2014 the complete single-team product, on Cloudflare Workers",
+  "description": "Edge-native scheduling engine — the complete single-team product, on Cloudflare Workers",
   "license": "MIT",
   "type": "module",
   "exports": {
@@ -28,7 +28,7 @@
     "@cf-wasm/photon": "^0.4.0",
     "@resvg/resvg-wasm": "^2.6.2",
     "drizzle-orm": "^0.45.2",
-    "hono": "^4.13.2",
+    "hono": "^4.13.12",
     "satori": "^0.29.0",
     "zod": "^4.4.3"
   },
