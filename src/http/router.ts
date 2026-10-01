@@ -53,6 +53,18 @@ export function buildRouter(ports: EnginePorts, slots: SlotService): Hono<{ Bind
   const app = new Hono<{ Bindings: Env }>()
   const publicScope: RequestScope = { consistency: 'unconstrained' }
 
+  app.use('*', async (c, next) => {
+    await next()
+    c.header('X-Content-Type-Options', 'nosniff')
+    c.header('Referrer-Policy', 'strict-origin-when-cross-origin')
+    c.header('Permissions-Policy', 'camera=(), microphone=(), geolocation=()')
+    c.header('Strict-Transport-Security', 'max-age=31536000; includeSubDomains')
+    c.header(
+      'Content-Security-Policy',
+      "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://www.google-analytics.com; frame-src 'self'; frame-ancestors *; base-uri 'self'; form-action 'self'",
+    )
+  })
+
   // `ok` stays a pure liveness signal — a deployment deliberately running
   // without an email provider (local dev, a first boot) is UP, and flipping
   // `ok` to false for it would train whoever wired the monitor to ignore the

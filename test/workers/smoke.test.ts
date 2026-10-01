@@ -64,6 +64,23 @@ describe('/health surfaces silent degradation', () => {
     expect(unusable.warnings.some((w) => w.startsWith('email_not_configured'))).toBe(true)
   })
 
+  it('adds baseline browser security headers to public responses', async () => {
+    const { default: worker } = await import('../../src/index.js')
+    const res = await worker.fetch(
+      new Request('https://punctual.sh/privacy'),
+      env,
+      createExecutionContext(),
+    )
+
+    expect(res.headers.get('x-content-type-options')).toBe('nosniff')
+    expect(res.headers.get('referrer-policy')).toBe('strict-origin-when-cross-origin')
+    expect(res.headers.get('permissions-policy')).toContain('camera=()')
+    expect(res.headers.get('strict-transport-security')).toContain('max-age=31536000')
+    expect(res.headers.get('content-security-policy')).toContain("default-src 'self'")
+    expect(res.headers.get('content-security-policy')).toContain("base-uri 'self'")
+    expect(res.headers.get('content-security-policy')).toContain("form-action 'self'")
+  })
+
   it('never leaks the provider key itself, only the mode', async () => {
     const { default: worker } = await import('../../src/index.js')
     const res = await worker.fetch(
