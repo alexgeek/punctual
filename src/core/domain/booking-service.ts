@@ -272,6 +272,10 @@ function normalizeQuestionLabel(label: string): string {
 }
 
 const AGENDA_LABEL_NORMALIZED = normalizeQuestionLabel(AGENDA_QUESTION.label)
+const AGENDA_LABEL_ALIASES = new Set([
+  AGENDA_LABEL_NORMALIZED,
+  normalizeQuestionLabel('What would you like to talk about?'),
+])
 
 /**
  * Also lives here (rather than duplicated in the dashboard editor, which
@@ -307,7 +311,7 @@ const AGENDA_EDITOR_DERIVED_ID = slugify(AGENDA_QUESTION.label)
  */
 export function effectiveQuestions(et: EventType): EventTypeQuestion[] {
   const hasOwnAgenda = et.questions.some(
-    (q) => q.id === AGENDA_QUESTION.id || normalizeQuestionLabel(q.label) === AGENDA_LABEL_NORMALIZED,
+    (q) => q.id === AGENDA_QUESTION.id || AGENDA_LABEL_ALIASES.has(normalizeQuestionLabel(q.label)),
   )
   return hasOwnAgenda ? et.questions : [...et.questions, AGENDA_QUESTION]
 }
