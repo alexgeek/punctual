@@ -139,7 +139,8 @@ describe('the instance homepage', () => {
     expect(html).toContain('href="/support/onboarding"')
     expect(html).toContain('with one of the team')
     expect(html).not.toContain('Calendly')
-    expect(html).toContain('Scheduling by')
+    expect(html).not.toContain('Scheduling by')
+    expect(html).not.toContain('punctual.sh')
     // Hosts still use /login directly; the public homepage does not advertise it to guests.
     expect(html).not.toContain('<a href="/login">Sign in</a>')
   })

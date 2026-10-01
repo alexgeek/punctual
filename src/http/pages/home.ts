@@ -25,8 +25,6 @@ export interface InstanceHomeData {
   operator?: string
 }
 
-/** The Punctual site, for the one small line of attribution. */
-const PUNCTUAL_SITE_URL = 'https://punctual.sh'
 
 /**
  * Text with its URLs and addresses made clickable. One pass over the RAW
@@ -168,7 +166,6 @@ export function instanceHomePage(d: InstanceHomeData): string {
   ]
     .filter(Boolean)
     .join(' <span aria-hidden="true">·</span> ')}</p>
-  <p class="pu-home-foot-by">Scheduling by <a class="pu-mark" href="${PUNCTUAL_SITE_URL}" target="_blank" rel="noopener">punctual<span>:</span></a></p>
 </footer>
 </body></html>`
   )

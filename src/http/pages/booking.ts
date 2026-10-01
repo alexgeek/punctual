@@ -25,13 +25,6 @@ import { formatInZone, localDateString, offsetLabel } from '../../core/time/zone
 import { embedResizeScriptTag } from '../embed.js'
 import { pageCss } from '../styles.js'
 
-/**
- * The wordmark in a public-facing footer always points here, not at `/` —
- * on a self-hosted install, `/` is that operator's own homepage, and a
- * curious guest clicking "punctual:" wants the project, not another loop
- * back into the same deployment they're already looking at.
- */
-export const PUNCTUAL_SITE_URL = 'https://punctual.sh'
 
 export function escapeHtml(s: string): string {
   return s
@@ -126,32 +119,9 @@ ${chrome.description ? `<meta name="twitter:description" content="${escapeHtml(c
  * it the iframe on a customer's page never learns the booking page's real
  * height and stays pinned at `data-height` (default 620px) for the whole
  * multi-step flow.
- *
- * `operator` is the host's company on booking-flow pages (see
- * `displayCompany`). A guest on someone's booking page is dealing with that
- * person's company, not with this software — so the company anchors the
- * footer and the wordmark becomes the attribution, instead of the product
- * tagline fronting a page it doesn't own.
- *
- * No `brandName` parameter: the wordmark below is a fixed "punctual:"
- * attribution to the open-source project (it links to punctual.sh, not this
- * deployment), so a self-hosted `BRAND_NAME` override must NOT retext it —
- * "acme scheduler:" opening punctual.sh instead of Acme's own site would be
- * an unrelated, confusing destination for that click.
  */
-export function shellFoot(poweredBy = true, embed = false, operator?: string | null): string {
-  // target="_blank": this page can be embedded in a customer's iframe
-  // (`embed`, below), and an external destination navigating the iframe
-  // itself in place would either hit the host site's framing restrictions
-  // and go blank, or strand the guest on punctual.sh with no way back into
-  // the booking flow. A new tab is correct whether embedded or not — this
-  // link now leaves the deployment entirely.
-  const mark = `<a class="pu-mark" href="${PUNCTUAL_SITE_URL}" target="_blank" rel="noopener">punctual<span>:</span></a>`
-  const foot = operator
-    ? `<p class="pu-foot">${escapeHtml(operator)} · scheduling by ${mark}</p>`
-    : `<p class="pu-foot">${mark} — scheduling that shows up on time</p>`
+export function shellFoot(_poweredBy = true, embed = false, _operator?: string | null): string {
   return `</div>
-${poweredBy ? foot : ''}
 ${embed ? embedResizeScriptTag() : ''}
 </body></html>`
 }
