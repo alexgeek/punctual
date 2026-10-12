@@ -88,6 +88,17 @@ describe('effectiveQuestions', () => {
     expect(qs).toEqual([own])
   })
 
+  it('a host-declared question with conversational agenda wording also replaces the builtin', () => {
+    const own = {
+      id: 'what-would-you-like-to-talk-about',
+      label: 'What would you like to talk about?',
+      type: 'textarea' as const,
+      required: true,
+    }
+    const qs = effectiveQuestions(eventType({ questions: [own] }))
+    expect(qs).toEqual([own])
+  })
+
   it('matches the builtin label regardless of case or extra whitespace', () => {
     const own = {
       id: 'q1',

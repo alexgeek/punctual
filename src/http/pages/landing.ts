@@ -16,7 +16,7 @@
  * page is the fastest way to lose the trust the pledge is supposed to buy.
  */
 
-import { escapeHtml, PUNCTUAL_SITE_URL } from './booking.js'
+import { escapeHtml } from './booking.js'
 import { pageCss, LANDING_CSS } from '../styles.js'
 
 export interface LandingPageOptions {
@@ -131,9 +131,6 @@ export function footer(githubUrl: string, operator?: string): string {
     <a href="/privacy">Privacy</a>
     <a href="/terms">Terms</a>
   </nav>
-  <p class="pu-muted" style="text-align:center;margin:0">
-    <a class="pu-mark" href="${PUNCTUAL_SITE_URL}" target="_blank" rel="noopener">punctual<span>:</span></a> — scheduling that shows up on time
-  </p>
   ${operator ? `<p class="pu-muted" style="text-align:center;margin:.35rem 0 0;font-size:.8125rem">${escapeHtml(operator)}</p>` : ''}
 </footer>`
 }

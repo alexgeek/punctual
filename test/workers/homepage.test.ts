@@ -222,6 +222,7 @@ describe('the instance homepage', () => {
     expect(html).toContain('href="/ada/intro"')
     expect(html).toContain('href="https://acme.example" target="_blank" rel="noopener">acme.example</a>')
     expect(html).toContain('href="mailto:hello@acme.example"')
+    expect(html).not.toContain('href="/login"')
     expect(html).not.toContain('/ada/old')
     expect(html).not.toContain('Calendly')
 
